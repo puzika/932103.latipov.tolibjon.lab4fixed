@@ -1,0 +1,239 @@
+:root {
+   --color-component: #edeef0;
+   --color-selection-font: green;
+   --color-background: #e1e5eb;
+   --color-button-link: #507299;
+   --color-header: #2e5473;
+   --color-border: #d0d0d0;
+   --color-link-hover: rgba(46, 84, 115, .1);
+   --color-selection-background: rgba(46, 84, 115, .2);
+
+   --default-font-size: 1.6rem;
+}
+
+@mixin responsive($breakpoint) {
+   @if $breakpoint ==tablet {
+      @media (max-width: 67.5em) {
+         @content
+      }
+
+      ; //1080px
+   }
+
+   @if $breakpoint ==phone {
+      @media (max-width: 56.25em) {
+         @content
+      }
+
+      ; //900px
+   }
+
+   @if $breakpoint ==phone-small {
+      @media (max-width: 43.75em) {
+         @content
+      }
+
+      ; //700px
+   }
+}
+
+*,
+*::before,
+*::after {
+   margin: 0;
+   padding: 0;
+   box-sizing: inherit;
+}
+
+html {
+   font-size: 62.5%;
+   box-sizing: border-box;
+
+   @include responsive(phone) {
+      font-size: 50%;
+   }
+}
+
+*::selection {
+   background-color: var(--color-selection-background);
+   color: var(--color-selection-font);
+}
+
+body {
+   background-color: var(--color-background);
+   font-size: var(--default-font-size);
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+   background-color: var(--color-header);
+   padding: .5rem 0;
+
+   &__logo {
+      margin-left: 10%;
+   }
+}
+
+.footer {
+   background-color: var(--color-component);
+   padding: .5rem;
+
+   &__text {
+      color: gray;
+      text-align: center;
+   }
+}
+
+.app {
+   margin: 0 auto;
+   max-width: 60%;
+   min-width: 80rem;
+   padding: 2rem 0;
+   display: flex;
+   position: relative;
+
+   @include responsive(phone-small) {
+      flex-direction: column;
+      min-width: 40rem;
+   }
+
+   &::after {
+      content: '';
+      flex: .5;
+   }
+
+   &>*:not(:last-child) {
+      margin-right: 1.5rem;
+
+      @include responsive(phone-small) {
+         margin-right: 0;
+         margin-bottom: 2rem;
+      }
+   }
+}
+
+.sidebar {
+   flex: .5;
+
+   &__list {
+      list-style: none;
+
+      @include responsive(phone-small) {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+      }
+   }
+
+   &__link {
+
+      &:link,
+      &:visited {
+         color: var(--color-button-link);
+         text-decoration: none;
+      }
+
+      display: block;
+      padding: 1rem;
+      transition: background-color .15s;
+
+      &::first-letter {
+         text-transform: uppercase;
+      }
+
+      &:hover {
+         background-color: var(--color-link-hover);
+      }
+   }
+}
+
+.messages {
+   flex: 1;
+
+   &__message {
+      background-color: var(--color-component);
+      padding: 2rem;
+      border: .15rem solid var(--color-border);
+      border-radius: 1rem;
+
+      &:not(:last-child) {
+         margin-bottom: 2rem;
+      }
+   }
+
+   &__title {
+      padding-bottom: 1rem;
+      position: relative;
+
+      &::after {
+         content: '';
+         position: absolute;
+         bottom: 0;
+         left: 50%;
+         transform: translateX(-50%);
+         width: calc(100% + 4rem);
+         height: .3rem;
+         background-color: rgba(128, 128, 128, .4);
+      }
+   }
+
+   &__content {
+      margin-bottom: 1rem;
+
+      &--titled {
+         margin: 1rem 0;
+      }
+   }
+
+   &__image {
+      width: 100%;
+   }
+
+   &__feedback {
+      border-top: .35rem solid var(--color-border);
+      padding: 1rem 0 0;
+      display: flex;
+      justify-content: space-between;
+
+      &>* {
+         border: none;
+         outline: none;
+         background: transparent;
+         font-size: 1.7rem;
+         color: var(--color-button-link);
+         cursor: pointer;
+      }
+   }
+}
+
+.important {
+   @include responsive(tablet) {
+      display: none;
+   }
+
+   position: fixed;
+   top: 7rem;
+   right: 15%;
+
+   &__info {
+      width: 16rem;
+      background-color: var(--color-component);
+      border: .15rem solid var(--color-border);
+      border-radius: .6rem;
+      padding: 2rem 1rem;
+
+      &:not(:last-child),
+      &>*:not(:last-child) {
+         margin-bottom: 2rem;
+      }
+   }
+
+   &__title {
+      margin-left: .5rem;
+      font-size: var(--default-font-size);
+   }
+
+   &__text {
+      background-color: var(--color-border);
+   }
+}
